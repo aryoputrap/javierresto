@@ -24,7 +24,7 @@ class LihatDaftar extends Component {
     this.state = {
       lihatDaftar: [
         {
-          id: "1",
+          menid: "1",
           image: "https://cdn.idntimes.com/content-images/post/20170728/simple-onigiri-rice-ball-snack-13-7148874bafe16e4384b448a6cc852ee2.jpg",
           price: "128900",
           name: "Onigiri",

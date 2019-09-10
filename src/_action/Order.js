@@ -67,6 +67,21 @@ export const setisAddtoChart = (data) => {
     payload: data
   }
 }
+export const remove = id => {
+  return {
+    type: "REMOVE",
+    payload: id
+  };
+}
+
+export const indecrement = (data, id) => {
+  return {
+    type: "INDECREMENT",
+    payload:data,
+    id
+  }
+}
+
 // export const removeAddtoChart = (data) => {
 //   return {
 //     type: 'SET_REMOVEISADD_HOME',

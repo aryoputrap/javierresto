@@ -4,8 +4,7 @@ import { StyleSheet, View, StatusBar, Headers, TouchableOpacity, FlatList, Alert
 import { Button } from "react-native-paper"
 import Icon from 'react-native-vector-icons/AntDesign'
 import { connect } from "react-redux"
-import { setHomeTmp } from '../_action/Order'
-import {setisAddtoChart} from '../_action/Order'
+import { indecrement, setisAddtoChart, remove } from '../_action/Order'
 
 import Drink from './Drink/drink2'
 import Food from './Food/Food'
@@ -26,18 +25,50 @@ class Home extends Component {
           onPress: () => console.log("Cancel Pressed"),
           style: "cancel"
         },
-        { text: "OK", onPress: () => this.props.navigation.navigate('Bill') }
+        {
+          text: "OK", onPress: () => this.props.navigation.navigate('Bill')
+        }
       ],
       { cancelable: false }
     );
   };
 
-  // componentDidMount(){
-  //   console.log(this.props.Order.dataItemTmp)
-  // }
+  // onClickOrder = (item) => {
+  //   let orders = this.props.orders;
+  //   const menuIndex = this.props.orders.data.findIndex(order => {
+  //     return order.menu._id == item.menu._id;
+  //   });
+
+  //   if (order.data[menuIndex].qty > 1) {
+  //     order.data[menuIndex].qty -= 1;
+  //     this.props.dispatch(changeQty(orders.data));
+  //   } else {
+  //     orders.data.splice(menuIndex, 1);
+  //     this.props.dispatch(changeQty(order.data));
+  //   }
+  // };
+
+  Kurang = async (id) => {
+    // //set nilai state component child
+    const tmpCountObj = await this.props.Order.dataItemTmp
+    let indexDataNya = tmpCountObj.findIndex((item, index) => {
+      if (item.id == id) {
+        return item
+      }
+    })
+    const tmpCount = tmpCountObj[indexDataNya].qty
+    if (tmpCount > 1) {
+      await this.setState(({
+        count: tmpCount - 1
+      }))
+      await this.props.dispatch(indecrement(this.state.count, id))
+    } else {
+      tmpCountObj.splice(indexDataNya, 1)
+      await this.props.dispatch(remove(tmpCountObj))
+    }
+  };
 
   render() {
-    
     console.log('dataorder')
     console.log(this.props.Order.dataItemTmp)
     return (
@@ -61,50 +92,54 @@ class Home extends Component {
         </Tabs>
 
         {this.props.Order.isAddToChart ?
-          <View style={{ height: "23%", width: "100%", position: 'relative', 
-            backgroundColor: 'white'}}>
+          <View style={{
+            height: "23%", width: "100%", position: 'relative',
+            backgroundColor: 'white'
+          }}>
             <View style={{ flexDirection: 'row' }}>
-              <View style={{ flex: 4 }}>
-                <View style={{ height: "75%", width: "100%",alignContent:'center' }}>
+              <View style={{ flex: 5 }}>
+                <View style={{ height: "75%", width: "100%", alignContent: 'center' }}>
                   <ScrollView
                     showsHorizontalScrollIndicator={false}
                     horizontal={true}
                   >
-                    {this.props.Order.dataItemTmp.map(item => {
-                         return<TouchableOpacity
-                        >
-                          <Image
-                            source={{uri:item.image}}
-                            style={styles.Bulat}
-                          />
-                          <Text style={{marginLeft:18, fontSize:12}}>{item.name}({item.qty})</Text>
-                        </TouchableOpacity>
+                    {this.props.Order.dataItemTmp.map((item, index) => {
+                      return <TouchableOpacity
+                        onPress={() => this.Kurang(item.id)}
+                      >
+                        <Image
+                          source={{ uri: item.image }}
+                          style={styles.Bulat}
+                        />
+                        <Text style={styles.ordersMenuQty}>{item.qty}</Text>
+                        <Text style={styles.textOrder}>{item.name}</Text>
+                      </TouchableOpacity>
                     }
                     )}
                   </ScrollView>
                 </View>
               </View>
-              <View style={{ flex: 1 }}>
-                <Button style={styles.Button}
+              <View style={{ flex: 1, borderBottomLeftRadius: 50 }}>
+                <TouchableOpacity style={styles.Button}
                   onPress={() => this.props.navigation.navigate('Callsc')}>
                   <Icon name='phone' color='white' size={35} style={{ justifyContent: 'center', alignItems: 'center' }} />
-                </Button>
+                </TouchableOpacity>
               </View>
             </View >
-            <View style={{marginBottom:100, alignContent:'center', justifyContent:'center', flexGrow:1}}>
-              <Button
+            <View style={{ marginBottom: 100, alignContent: 'center', justifyContent: 'center', flexGrow: 1 }}>
+              <TouchableOpacity
                 onPress={this.handleConfirmOrder}
-                style={styles.Buttonx}>
-                <Text style={{ color: '#FFF', fontWeight: 'bold', fontSize: 15, justifyContent: 'center' }}>
-                  BILL VIEW
+                style={styles.Buttonx}
+              >
+                <Text style={styles.textbutonOrder}>
+                  ORDER
                      </Text>
-              </Button>
+              </TouchableOpacity>
             </View>
           </View>
           :
           false
         }
-
       </Container>
     );
   }
@@ -114,13 +149,34 @@ const mapStatePros = (state) => {
     Order: state.Order
   }
 }
-
 export default connect(mapStatePros)(Home)
 
 const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
     flex: 1,
+  },
+  textbutonOrder: {
+    color: '#FFF',
+    marginTop: 5,
+    fontWeight: 'bold',
+    fontSize: 25,
+    justifyContent: 'center'
+  },
+  textOrder: {
+    marginHorizontal: 23,
+    alignContent: 'center',
+    alignItems: 'center',
+    fontSize: 12
+  },
+  ordersMenuQty: {
+    position: "absolute",
+    right: 5,
+    bottom: 15,
+    backgroundColor: "#cc6000",
+    paddingHorizontal: 6,
+    borderRadius: 10,
+    color: "#fff"
   },
   Bulat: {
     width: 70,
@@ -139,10 +195,9 @@ const styles = StyleSheet.create({
     width: '70%'
   },
   Button: {
-    borderRadius: 30,
-    width: 70,
-    height: 70,
-    marginRight: 20,
+    borderBottomLeftRadius: 30,
+    width: "100%",
+    height: "60%",
     marginTop: 10,
     alignItems: 'center',
     justifyContent: 'center',
@@ -150,10 +205,13 @@ const styles = StyleSheet.create({
     color: "#e67e22"
   },
   Buttonx: {
+    width: "95%",
+    height: "50%",
     borderRadius: 10,
-    marginBottom: 60,
-    marginLeft: 10,
-    marginRight: 10,
+    marginBottom: 70,
+    alignContent: 'center',
+    alignItems: 'center',
+    alignSelf: 'center',
     backgroundColor: "#e67e22",
   },
   viewButton: {

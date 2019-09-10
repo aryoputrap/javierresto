@@ -55,21 +55,21 @@ import { Card, CardItem, Body, Text, Container, Content } from 'native-base';
           id:"12",
           image:"https://awsimages.detik.net.id/community/media/visual/2019/03/22/f9f9ffbb-6f9a-48c1-8396-2fc09a750779.jpeg?a=1",
           price:"30000",
-          name : "Puniki",
+          name : "Uniki",
           status:"AVAIL"
         },
         {
           id:"13",
-          image:"https://awsimages.detik.net.id/community/media/visual/2019/03/22/d206f7dc-d4fa-4e09-887a-1c91c4c683dc_43.jpeg?w=700&q=90",
+          image:"https://cdn.idntimes.com/content-images/post/20180704/499a151e97c7785ab98e374cf982d835.jpg",
           price:"45000",
-          name : "Puniki",
+          name : "Prem Tea",
           status:"AVAIL"
         },
         {
           id:"14",
-          image:"https://i2.wp.com/abiummi.com/assets/uploads/2015/06/Resep-Es-Buah-Segar-Es-krim.jpg?resize=300%2C400",
+          image:"http://resephariini.com/wp-content/uploads/2015/02/CAFE-6-1024x1024.jpg",
           price:"52000",
-          name : "Unibi",
+          name : "Getama",
           status:"AVAIL"
         },
         ]

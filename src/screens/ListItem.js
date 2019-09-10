@@ -4,17 +4,28 @@ import { Card, IconButton, Appbar, Button, Title } from "react-native-paper";
 import Icon from 'react-native-vector-icons/AntDesign'
 import { connect } from 'react-redux'
 
-import {setOrderHome,setisAddtoChart} from '../_action/Order'
+import {setOrderHome,setisAddtoChart, indecrement } from '../_action/Order'
 
 class ListItem extends Component {
 
   state = {
     count: 1,
     isAddToCart: false,
-    Tmp :null
+    Tmp :[],
+    ambilIndexById : null
   };
   //Quantity
-
+  componentDidMount(){
+    const temporerObjOrder = this.props.Order.dataItemTmp
+    const indexNya = temporerObjOrder.map( (item,index) => {
+      if(item.id == this.props.item.id){
+        return item
+      }
+    })
+    this.setState({
+      ambilIndexById:indexNya
+    })
+  }
   AddCart = async() => {
     let dataTemporerArrayItem = []
     await this.props.dispatch(setOrderHome(true))
@@ -24,48 +35,34 @@ class ListItem extends Component {
         id: this.props.item.id,
         name : this.props.item.name,
         image: this.props.item.image,
-        qty:this.state.count
+        qty:this.state.count 
       }
     })
-    // if(this.props.Order.dataItemTmp){
-    //   this.props.Order.dataItemTmp.map( (item,index) => {
-    //     if(item.id == this.state.Tmp.id){
-    //       const baruTemp = {
-    //         id:item.id,
-    //         name:item.name,
-    //         image:item.image,
-    //         qty:item.qty+1
-    //       }
-    //       dataTemporerArrayItem.push(baruTemp)
-    //     }else{
-    //       dataTemporerArrayItem.push(item)
-    //     }
-    //     return{
-
-    //     }
-    //   })
-    // }
     await this.props.dispatch(setisAddtoChart(this.state.Tmp))
-    await console.log(this.props.Orders)
   }
 
-  Tambah = () => {
-    this.setState(nilaiSebelum => ({
-      count: nilaiSebelum.count + 1
+  Tambah = async (id) => {
+    // set nilai state compononet child
+    await this.setState(nilaiSebelum => ({
+      count:nilaiSebelum.count + 1
     }));
+    //ubah orders
+    await this.props.dispatch(indecrement(this.state.count, id))
   };
 
-  Kurang = () => {
-    //assignment
-    this.setState(nilaiSebelum => ({
-      count: Math.max(nilaiSebelum.count - 1, 1)
+  Kurang = async (id) => {
+    //set nilai state component child
+    await this.setState(nilaiSebelum => ({
+      count:Math.max(nilaiSebelum.count - 1, 0)
     }))
-    if(this.state.count <= 1){
+    //ubah order
+    if(this.state.count <= 0){
       this.setState({
         isAddToCart:false
       })
-    }
-  }
+    } 
+     await this.props.dispatch(indecrement(this.state.count,id))
+  };
 
   cekNominal = nominal => {
     const reverse = nominal
@@ -76,7 +73,7 @@ class ListItem extends Component {
     return hasil;
   };
 
-  //addvar let
+
   render() {
     return (
       <View style={{ flex: 1 }}>
@@ -95,20 +92,20 @@ class ListItem extends Component {
             </View>
             <View>
               <Text style={styles.harga}>
-                Rp {this.cekNominal(this.props.item.price)} / Porsi
+                Rp {this.cekNominal(this.props.item.price)}/Porsi
                   </Text>
             </View>
-
+            {/* Conditional Assignment */}
             {this.state.isAddToCart ?
-              <View style={{ alignContent: 'center', marginTop: 2 }}>
+              <View style={{ alignContent: 'center', marginTop: 2,shadowColor:'white' }}>
                 <View style={{ height: 50, width: "100%", backgroundColor: 'white', elevation: 2, flexDirection: 'row', justifyContent: 'space-between', alignItems: "center", padding: 5, borderRadius: 5 }}>
-                  <TouchableOpacity onPress={this.Kurang}>
+                  <TouchableOpacity onPress={()=>this.Kurang(this.props.item.id)}>
                     <View>
                       <Icon name='minuscircleo' color='#e67e22' size={25} />
                     </View>
                   </TouchableOpacity>
                   <Text style={{ fontWeight: 'bold', color: 'black' }}>{this.state.count}</Text>
-                  <TouchableOpacity onPress={this.Tambah}>
+                  <TouchableOpacity onPress={() =>this.Tambah(this.props.item.id)}>
                     <View>
                       <Icon name='pluscircleo' color='#e67e22' size={25} />
                     </View>
@@ -116,6 +113,8 @@ class ListItem extends Component {
                 </View>
               </View>
               :
+              // {this.props.Order.dataItemTmp[0].qty}
+
               <View style={{ marginTop: 3 }}>
                 <TouchableOpacity style={styles.buttonx}
                   onPress={()=> this.AddCart()}

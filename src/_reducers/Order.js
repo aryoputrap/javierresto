@@ -8,20 +8,14 @@ initialStateOrder = {
   
   export default Order = (state = initialStateOrder, action) => {
     switch (action.type) {
-      //Untuk Order Master ADD
-      case 'ADD_ORDER_PENDING':
+      
+      case 'INDECREMENT':
+        let index = state.dataItemTmp.findIndex(x => x.id == action.id)
+        state.dataItemTmp[index].qty = action.payload
         return {
           ...state,
-          isLoading: true
+          dataItemTmp: [...state.dataItemTmp]
         }
-        break
-      case 'ADD_ORDER_FULFILLED':
-        return {
-          ...state,
-          dataItem: action.payload.data,
-          isLoading: false
-        }
-        break
       case 'ADD_ORDER_REJECTED':
         return {
           ...state,
@@ -121,6 +115,18 @@ initialStateOrder = {
         return{
           ...state,
           dataItemTmp: [...state.dataItemTmp,action.payload]
+        }
+      case 'SET_CHANGE_QTY':
+        return{
+          ...state,
+          dataItemTmp:action.payload
+        }
+      case 'REMOVE':
+        return{
+          ...state,
+          dataItemTmp:state.dataItemTmp.filter((item)=>(
+            item.id !== action.payload 
+          ))
         }
        default:
         return state
