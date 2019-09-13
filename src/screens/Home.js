@@ -119,7 +119,7 @@ class Home extends Component {
                   </ScrollView>
                 </View>
               </View>
-              <View style={{ flex: 1, borderBottomLeftRadius: 50 }}>
+              <View style={{flex: 1, borderBottomLeftRadius: 50 }}>
                 <TouchableOpacity style={styles.Button}
                   onPress={() => this.props.navigation.navigate('Callsc')}>
                   <Icon name='phone' color='white' size={35} style={{ justifyContent: 'center', alignItems: 'center' }} />

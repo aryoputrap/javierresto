@@ -35,6 +35,8 @@ class ListItem extends Component {
         id: this.props.item.id,
         name : this.props.item.name,
         image: this.props.item.image,
+        price: this.props.item.price,
+        status: false,
         qty:this.state.count 
       }
     })
@@ -93,7 +95,7 @@ class ListItem extends Component {
             <View>
               <Text style={styles.harga}>
                 Rp {this.cekNominal(this.props.item.price)}/Porsi
-                  </Text>
+                </Text>
             </View>
             {/* Conditional Assignment */}
             {this.state.isAddToCart ?
@@ -215,8 +217,8 @@ const styles = StyleSheet.create({
     fontWeight: 'bold'
   },
   separated: {
-    marginLeft: 2,
     marginRight: 2,
+    marginLeft: 2,
     marginTop: 5,
     fontSize: 20,
     color: "black",

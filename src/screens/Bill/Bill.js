@@ -1,29 +1,52 @@
 import * as React from 'react';
-import { View, StyleSheet, Image } from 'react-native';
-import { ScrollView } from 'react-native-gesture-handler';
+import { View, StyleSheet, Image, TouchableOpacity } from 'react-native';
+import { ScrollView, FlatList } from 'react-native-gesture-handler';
 import { Card, CardItem, Body, Container, Content } from 'native-base';
 import { Button, Text } from 'react-native-paper';
-import Header from '../../components/header/Header'
+import { Checkbox } from "react-native-paper";
+import { connect } from "react-redux"
+
+import HeaderBill from '../../components/header/HeaderBill'
+import HeaderBill2 from '../../components/header/HeaderBill2'
+import ListBill from './listBill'
 
 
 class bill extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      checked: false,
+      isEnable: false,
+      jmlTotal:0   
+    };
+  }
+  sumHarga = async () => {
+    await this.props.Order.dataItemTmp.map((item) => {
+    const tmpMatap = [item.price*item.qty]
+    this.setState({
+        jmlTotal: this.state.jmlTotal+tmpMatap
+      })
+    })
+  }
+  componentDidMount() {
+    this.sumHarga()
+  }
 
-  // LOGICSUBMIT
-  // aksiSubmit = async () => {
-  //   if (this.state.textTblNumber != '') {
-  //     await AsyncStorage.setItem('noMeja', `${this.state.textTblNumber}`)
-  //     //Tambah Data table transaction (Just a tableNumber)
-  //     await this.props.dispatch(addTransaction({
-  //       tableNumber: this.state.textTblNumber,
-  //       isPaid: false
-  //     }))
-  //     await AsyncStorage.setItem('idTransaction', `${this.props.Transaction.dataItem.data.id}`)
-  //     await this.props.navigation.navigate('StackPrivate')
-  //   } else {
-  //     alert('Masukan Nomor Meja Terlebih Dahulu')
-  //   }
-  // }
+  CekStatusOrder = () => {
+    this.setState({
+      isEnable: true
+    })
+    this.props.Order.dataItemTmp.map((item) => {
+      if (!item.status) {
+        this.setState({
+          isEnable: false
+        })
+      }
+    })
+  }
   render() {
+
+
     return (
       <View style={styles.container}>
         <Text style={{ fontSize: 18, fontWeight: 'bold', textAlign: 'center' }}>
@@ -33,165 +56,127 @@ class bill extends React.Component {
           <Card style={styles.card}>
             <CardItem style={{ flexDirection: 'row', alignItems: 'space-between' }}>
               <Body>
-                <View style={{ flexDirection: 'row', alignItems: 'space-between', width: null, height: 105 }}>
-                  <Image source={require('../../asset/logo.jpg')}
-                    style={{ width: 100, height: 105, position: 'absolute', borderRadius: 10 }} />
-                  <Text style={{ fontWeight: 'bold', fontSize: 20, paddingLeft: 110, position: 'absolute' }}>
-                    Table No: 50
-                </Text>
+                <HeaderBill navigation={this.props.navigation} />
+                <View style={styles.garis1} />
+                <HeaderBill2 />
+                <View style={styles.roll}>
+                  <FlatList
+                    style={styles.stretch}
+                    data={this.props.Order.dataItemTmp}
+                    renderItem={({ item }) =>
+                      (
+                        <ListBill
+                          callBackNya={this.CekStatusOrder}
+                          itemNya={item} />
+                      )}
+                    keyExtractor={item => item.id}
+                    showVerticalScrollIndicator={true}
+                  />
                 </View>
-                {/* title */}
-                <View style={{ flexDirection: 'row', alignItems: 'space-between', position: 'absolute',paddingLeft: 10, paddingTop: 30, }}>
-                  <Text style={{ fontSize: 13, paddingLeft: 100, fontWeight:'bold' }}>
-                   OCUBANN JAV-RESTOURANT
-                </Text>
+                <View style={styles.garis1}/>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    alignItems: 'space-between',
+                    backgroundColor: '#e67e22',
+                    height: "24%",
+                    width: '100%',
+                    borderRadius: 5,
+                  }}>
+                  <View style={{ flex: 1 }}>
+                    <Text style={styles.bill}>Sub-Total</Text>
+                    <Text style={styles.bill}>Discount</Text>
+                    <Text style={styles.bill}>Service Charge(5.5%)</Text>
+                    <Text style={styles.bill}>Tax(10%)</Text>
+                    <Text
+                      style={{
+                        textAlign: 'left',
+                        marginVertical: 5,
+                        marginHorizontal: 15,
+                        fontWeight: 'bold',
+                      }}>
+                      Total
+                  </Text>
+                  </View>
+                  <View style={{ flex: 1 }}>
+                    <Text style={styles.bill}>{this.state.jmlTotal}</Text>
+                    <Text style={styles.bill}>Rp.0</Text>
+                    <Text style={styles.bill}>Rp.1.500</Text>
+                    <Text style={styles.bill}>Rp.17.890</Text>
+                    <Text style={styles.total}>Rp. 192.000</Text>
+                  </View>
                 </View>
-                <View style={{ flexDirection: 'row', alignItems: 'space-between', position: 'absolute', paddingTop: 45 }}>
-                  <Text style={{ fontSize: 13, paddingLeft: 110 }}>
-                  Guests are The Top Priority
-                </Text>
-                </View>
-                <View style={{ flexDirection: 'row', alignItems: 'space-between', position: 'absolute', paddingTop: 70, paddingLeft: 110 }}>
-                  <Button style={{ backgroundColor: '#e67e22' }}>
-                    <Text style={{ fontSize:15,fontWeight:'bold',color:'white' }}>COMPLAIN</Text>
+                <View style={styles.garis1} />
+                <View style={{ flexDirection: 'row', alignItems: 'space-between' }}>
+                  <Button
+                    mode="contained"
+                    activeOpacity="10"
+                    color="#e67e22"
+                    disabled={!this.state.isEnable}
+                    style={{ width: '50%', marginLeft: 100 }}
+                    onPress={() => {
+                      this.props.navigation.navigate('EndRe')
+                    }}>
+
+                    <Text style={{ color: 'white', fontSize: 18, fontWeight: 'bold' }}>CASHIER</Text>
                   </Button>
-                  <Button 
-                  onPress={() => {
-                      this.props.navigation.navigate('Home')}}
-                  style={{ backgroundColor: '#e67e22',marginLeft:20 }}>
-                    <Text style={{ fontSize:15,fontWeight:'bold',color:'white' }}>DELETE</Text>
-                  </Button>
                 </View>
-        <View
-          style={{
-            backgroundColor: '#e67e22',
-            height: 1,
-            width: '100%',
-            marginVertical: 15,
-          }}></View>
-        <View style={{ flexDirection: 'row', alignItems: 'space-between' }}>
-          <Text
-            style={{
-              fontSize: 17,
-              fontWeight: 'bold',
-              textAlign: 'center',
-              color: '#e67e22',
-              marginLeft: 15,
-            }}>
-            Waiting
-        </Text>
-          <Text style={{ fontSize: 17, textAlign: 'center', marginLeft: 15 }}>
-            Onigiri
-        </Text>
-          <Text style={{ fontSize: 17, textAlign: 'center', marginLeft: 15 }}>
-            Rp 128.900
-        </Text>
-        </View>
-        <View style={{ flexDirection: 'row', alignItems: 'space-between' }}>
-          <Text
-            style={{
-              fontSize: 17,
-              fontWeight: 'bold',
-              textAlign: 'center',
-              color: '#e67e22',
-              marginLeft: 80,
-            }}>
-            
-        </Text>
-          <Text style={{ fontSize: 17, textAlign: 'center', marginLeft: 15 }}>
-            Sake
-        </Text>
-          <Text style={{ fontSize: 17, textAlign: 'center', marginLeft: 20 }}>
-            Rp 50.000
-        </Text>
-        </View>
-        <View
-          style={{
-            backgroundColor: '#e67e22',
-            height: 1,
-            width: '100%',
-            marginVertical: 15,
-          }}></View>
-        <View
-          style={{
-            flexDirection: 'row',
-            alignItems: 'space-between',
-            backgroundColor: '#e67e22',
-            height: 130,
-            width: '100%',
-            borderRadius: 5,
-          }}>
-          <View style={{ flex: 1 }}>
-            <Text style={styles.bill}>Discount</Text>
-            <Text style={styles.bill}>Service Charge(5.5%)</Text>
-            <Text style={styles.bill}>Tax(10%)</Text>
-            <Text
-              style={{
-                textAlign: 'left',
-                marginVertical: 5,
-                marginHorizontal: 15,
-                fontWeight: 'bold',
-              }}>
-              Total
-          </Text>
-          </View>
-          <View style={{ flex: 1 }}>
-            <Text style={styles.bill}>Rp.0</Text>
-            <Text style={styles.bill}>Rp.1.500</Text>
-            <Text style={styles.bill}>Rp.17.890</Text>
-            <Text
-              style={{
-                textAlign: 'left',
-                marginVertical: 5,
-                marginHorizontal: 15,
-                fontWeight: 'bold',
-                color: 'white'
-              }}>
-              Rp. 192.000
-          </Text>
-          </View>
-        </View>
-
-        <View
-          style={{
-            backgroundColor: '#e67e22',
-            height: 1,
-            width: '100%',
-            marginVertical: 15,
-          }}></View>
-
-        <View style={{ flexDirection: 'row', alignItems: 'space-between' }}>
-          <Button
-            mode="contained"
-            color="#e67e22"
-            style={{width: '50%', marginLeft:100}}
-            onPress={() => {
-              this.props.navigation.navigate('EndRe')}}>
-
-            <Text style={{ color: 'white', fontSize: 18,fontWeight:'bold'}}>CASHIER</Text>
-          </Button>
-        </View>
               </Body>
             </CardItem>
           </Card>
         </View>
-        
       </View>
     );
   }
 }
-
-export default bill;
+const mapStatePros = (state) => {
+  return {
+    Order: state.Order
+  }
+}
+export default connect(mapStatePros)(bill)
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 5,
+    padding: 3,
     width: '100%',
     alignItems: 'center',
   },
+  total:{
+    textAlign: 'left',
+    marginVertical: 5,
+    marginHorizontal: 15,
+    fontWeight: 'bold',
+    color: 'white'
+  },
+  roll: {
+    height: "37%",
+    width: "100%",
+  },
+  stretch: {
+    width: "100%",
+  },
+  garis1: {
+    backgroundColor: '#e67e22',
+    height: 1,
+    width: '100%',
+    marginVertical: 13,
+  },
+  menu: {
+    fontSize: 17,
+    textAlign: 'center',
+    fontWeight: 'bold'
+  },
+  status: {
+    fontSize: 17,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    color: '#e67e22',
+    marginLeft: 15,
+  },
   card: {
-    marginTop: 20
+    marginTop: 5
   },
   container: {
     padding: 15,
@@ -200,8 +185,8 @@ const styles = StyleSheet.create({
   Button: {
     width: 100,
     height: 40,
-    backgroundColor: 'white'}
-    ,
+    backgroundColor: 'white'
+  },
   bill: {
     textAlign: 'left',
     marginVertical: 5,

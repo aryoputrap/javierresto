@@ -82,10 +82,5 @@ export const indecrement = (data, id) => {
   }
 }
 
-// export const removeAddtoChart = (data) => {
-//   return {
-//     type: 'SET_REMOVEISADD_HOME',
-//     payload: data
-//   }
-// }
+
 
