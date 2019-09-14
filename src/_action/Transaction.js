@@ -1,5 +1,5 @@
 import axios from 'axios'
-import Constanta from '../res/Constant'
+import Constanta from '../Constanta'
 
 export const addTransaction = (data) => {
   return {

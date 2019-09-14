@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { View, StyleSheet, Image,TouchableOpacity } from 'react-native';
 import { Button, Text } from 'react-native-paper';
+import AsyncStorage from "@react-native-community/async-storage"
 
 class bill extends React.Component {
   constructor() {
@@ -9,6 +10,19 @@ class bill extends React.Component {
       checked: false
     };
   }
+  state = {
+    dataItemKirimNya: [],
+    noTbl:0
+  }
+  getDataTable = async()=>{
+    const tmpTbl = await AsyncStorage.getItem('noTbl') 
+    await this.setState({
+      noTbl:tmpTbl
+    })
+  }
+   componentDidMount(){
+    this.getDataTable()
+   }
 
   render() {
     const { checked } = this.state;
@@ -19,7 +33,7 @@ class bill extends React.Component {
                   <Image source={require('../../asset/logo.jpg')}
                     style={{ width: 100, height: 105, position: 'absolute', borderRadius: 10 }} />
                   <Text style={{ fontWeight: 'bold', fontSize: 20, paddingLeft: 110, position: 'absolute' }}>
-                    Table No: 50
+                    Table No:{this.state.noTbl}
                 </Text>
                 </View>
                 <View style={{ flexDirection: 'row', alignItems: 'space-between', position: 'absolute', paddingLeft: 10, paddingTop: 30 }}>

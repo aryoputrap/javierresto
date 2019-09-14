@@ -32,7 +32,8 @@ class ListItem extends Component {
     await this.setState({
       isAddToCart: true,
       Tmp:{
-        id: this.props.item.id,
+        menuId: this.props.item.id,
+        transactionId: this.props.Transaction.dataItem.id,
         name : this.props.item.name,
         image: this.props.item.image,
         price: this.props.item.price,
@@ -142,7 +143,8 @@ class ListItem extends Component {
 const mapStateToProps = (state) => {
   return {
     Menu: state.Menu,
-    Order:state.Order
+    Order:state.Order,
+    Transaction:state.Transaction
   }
 }
 export default connect(mapStateToProps)(ListItem)

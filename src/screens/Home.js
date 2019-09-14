@@ -2,9 +2,10 @@ import React, { Component } from 'react';
 import { Card, CardItem, Body, Tab, Tabs, Text, Container, TabHeading, Content } from 'native-base';
 import { StyleSheet, View, StatusBar, Headers, TouchableOpacity, FlatList, Alert, Image } from 'react-native';
 import { Button } from "react-native-paper"
-import Icon from 'react-native-vector-icons/AntDesign'
+import Icon from 'react-native-vector-icons/Entypo'
 import { connect } from "react-redux"
-import { indecrement, setisAddtoChart, remove } from '../_action/Order'
+import { indecrement, setisAddtoChart, remove,addOrder } from '../_action/Order'
+import AsyncStorage from "@react-native-community/async-storage"
 
 import Drink from './Drink/drink2'
 import Food from './Food/Food'
@@ -14,6 +15,10 @@ import { ScrollView } from 'react-native-gesture-handler';
 // import { Item } from 'react-native-paper/typings/components/List';
 
 class Home extends Component {
+  state = {
+    dataItemKirimNya: [],
+    noTbl:0
+  }
 
   handleConfirmOrder = () => {
     Alert.alert(
@@ -26,33 +31,27 @@ class Home extends Component {
           style: "cancel"
         },
         {
-          text: "OK", onPress: () => this.props.navigation.navigate('Bill')
+          text: "OK", onPress: () => this.orderBenar()
         }
       ],
       { cancelable: false }
     );
   };
 
-  // onClickOrder = (item) => {
-  //   let orders = this.props.orders;
-  //   const menuIndex = this.props.orders.data.findIndex(order => {
-  //     return order.menu._id == item.menu._id;
-  //   });
-
-  //   if (order.data[menuIndex].qty > 1) {
-  //     order.data[menuIndex].qty -= 1;
-  //     this.props.dispatch(changeQty(orders.data));
-  //   } else {
-  //     orders.data.splice(menuIndex, 1);
-  //     this.props.dispatch(changeQty(order.data));
-  //   }
-  // };
+  orderBenar =  () => {
+    this.props.dispatch(addOrder(this.props.Order.dataItemTmp))
+    this.props.navigation.navigate('Bill')
+  }
+  hapusProp = () => {
+    
+  }
+ 
 
   Kurang = async (id) => {
     // //set nilai state component child
     const tmpCountObj = await this.props.Order.dataItemTmp
     let indexDataNya = tmpCountObj.findIndex((item, index) => {
-      if (item.id == id) {
+      if (item.menuId == id) {
         return item
       }
     })
@@ -67,26 +66,34 @@ class Home extends Component {
       await this.props.dispatch(remove(tmpCountObj))
     }
   };
-
+  getDataTable = async()=>{
+    const tmpTbl = await AsyncStorage.getItem('noTbl') 
+    await this.setState({
+      noTbl:tmpTbl
+    })
+  }
+   componentDidMount(){
+    this.getDataTable()
+   }
   render() {
-    console.log('dataorder')
-    console.log(this.props.Order.dataItemTmp)
     return (
       <Container>
-        <StatusBar style={{ backgroundColor: '#e67e22' }} />
+        <StatusBar  backgroundColor="#e67e22" barStyle="light-content"/>
         <Header />
         <Tabs>
           <Tab heading={<TabHeading style={{ backgroundColor: '#e67e22' }}>
-            <Text style={{ color: '#ffff', fontWeight: 'bold' }}>Food</Text></TabHeading>}>
+            <Icon name='bowl' color='white' size={25} />
+            <Text style={{ color: '#fff', fontWeight: 'bold' }}>Food</Text></TabHeading>}>
             <Food navigation={this.props.navigation} />
           </Tab>
           <Tab heading={<TabHeading style={{ backgroundColor: '#e67e22', }}>
-            <Text style={{ color: '#ffff', fontWeight: 'bold' }} >Desert</Text></TabHeading>}>
+          <Icon name='cake' color='white' size={25} />
+            <Text style={{ color: '#fff', fontWeight: 'bold' }} >Desert</Text></TabHeading>}>
             <Appetizer />
           </Tab>
-
           <Tab heading={<TabHeading style={{ backgroundColor: '#e67e22' }}>
-            <Text style={{ color: '#ffff', fontWeight: 'bold' }}>Drink</Text></TabHeading>}>
+          <Icon name='trash' color='white' size={25} />
+            <Text style={{ color: '#fff', fontWeight: 'bold' }}>Drink</Text></TabHeading>}>
             <Drink />
           </Tab>
         </Tabs>
@@ -105,7 +112,8 @@ class Home extends Component {
                   >
                     {this.props.Order.dataItemTmp.map((item, index) => {
                       return <TouchableOpacity
-                        onPress={() => this.Kurang(item.id)}
+                        key={index}
+                        onPress={() => this.Kurang(item.menuId)}
                       >
                         <Image
                           source={{ uri: item.image }}
@@ -119,7 +127,7 @@ class Home extends Component {
                   </ScrollView>
                 </View>
               </View>
-              <View style={{flex: 1, borderBottomLeftRadius: 50 }}>
+              <View style={{ flex: 1, borderBottomLeftRadius: 50 }}>
                 <TouchableOpacity style={styles.Button}
                   onPress={() => this.props.navigation.navigate('Callsc')}>
                   <Icon name='phone' color='white' size={35} style={{ justifyContent: 'center', alignItems: 'center' }} />

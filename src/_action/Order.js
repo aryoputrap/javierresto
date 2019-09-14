@@ -1,4 +1,5 @@
 import axios from 'axios'
+import Constanta from '../Constanta'
 
 export const addOrder = (dataJadi) => {
   return {

@@ -1,4 +1,5 @@
 import axios from 'axios'
+import Constanta from '../Constanta'
 
 export const getMenu = () => {
   return {
@@ -14,7 +15,6 @@ export const getMenuWhereCategory = (categoryId) => {
 }
 export const setDataDummyMenus = (data) => {
   return {
-    type:'STORE_MENUS_DUMMY',
-    payload : data
+    type:'STORE_MENUS_DUMMY'
   }
 }

@@ -10,7 +10,7 @@ initialStateOrder = {
     switch (action.type) {
       
       case 'INDECREMENT':
-        let index = state.dataItemTmp.findIndex(x => x.id == action.id)
+        let index = state.dataItemTmp.findIndex(x => x.menuId == action.id)
         state.dataItemTmp[index].qty = action.payload
         return {
           ...state,

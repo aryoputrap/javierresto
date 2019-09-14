@@ -50,8 +50,7 @@ initialState = {
 
       case'STORE_MENUS_DUMMY':
          return{
-           ...state,
-          dataItem: action.payload
+           ...state
          }
 
       default:

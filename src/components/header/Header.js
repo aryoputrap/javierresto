@@ -3,22 +3,36 @@ import { View, StyleSheet, StatusBar} from 'react-native';
 import { Header, Left, Icon,Text, Body, Right, Button, Content, Container } from 'native-base';
 import { IconButton, Colors } from 'react-native-paper';
 import IconIon from 'react-native-vector-icons/Ionicons'
+import AsyncStorage from "@react-native-community/async-storage"
 
 
 class header extends Component {
+  state = {
+    dataItemKirimNya: [],
+    noTbl:0
+  }
+  getDataTable = async()=>{
+    const tmpTbl = await AsyncStorage.getItem('noTbl') 
+    await this.setState({
+      noTbl:tmpTbl
+    })
+  }
+   componentDidMount(){
+    this.getDataTable()
+   }
 
   render() {
     return (
       <View>
       <StatusBar backgroundColor="#f0932b" barStyle="light-content"/>
         <Header style={{elevation:0, backgroundColor: "#e67e22" }}>
-          <Left>
+          <Left style={{flex:1}}>
           <Text style={{color:'white',fontWeight: 'bold', fontSize:20}}>
-              #50
+              No:{this.state.noTbl}
           </Text>
           </Left>
             <Text style={{
-              color: "white", flex: 1,
+              color: "white", flex: 2,
               textAlign: 'justify', marginLeft: 100, marginTop: 17,
               fontWeight: 'bold', alignContent: 'space-between',fontSize:20
             }}>

@@ -19,7 +19,7 @@ class bill extends React.Component {
     this.setState({ checked: !this.state.checked });
     let semuaDataOrder = this.props.Order.dataItemTmp
     const indexObjOrder = semuaDataOrder.findIndex((item) => {
-      if (item.id == this.props.itemNya.id) {
+      if (item.menuId == this.props.itemNya.menuId) {
         return item
       }
     })

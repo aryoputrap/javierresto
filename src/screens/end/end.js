@@ -2,9 +2,22 @@ import * as React from 'react';
 import { View, Image, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { Text, Appbar, Button, TextInput } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/AntDesign'
-
+import AsyncStorage from "@react-native-community/async-storage"
 
 class Profil extends React.Component {
+  state = {
+    dataItemKirimNya: [],
+    noTbl: 0
+  }
+  getDataTable = async () => {
+    const tmpTbl = await AsyncStorage.getItem('noTbl')
+    await this.setState({
+      noTbl: tmpTbl
+    })
+  }
+  componentDidMount() {
+    this.getDataTable()
+  }
 
   render() {
 
@@ -16,18 +29,23 @@ class Profil extends React.Component {
         </Appbar.Header>
         <View style={styles.container}>
           <View style={styles.logoContainer}>
+
             <Image style={styles.logo}
               source={require('../../asset/barcode.png')} />
-            <Text style={styles.title2}>THANKS #50</Text>
-          </View> 
+
+            <Text style={styles.title2}>Thank For Comming Mr/Mrs: No {this.state.noTbl}</Text>
+          </View>
         </View>
-      <View style={{marginVertical:500}}>
+        <View style={{ marginVertical: 500 }}>
           <TouchableOpacity
             style={styles.buttonx}
             onPress={() => this.props.navigation.navigate('Open')}
-          >
-            <View style={{marginTop: 13, alignItems:'flex-end', marginRight:20}}>
-              <Icon name='shoppingcart' color='white' size={50} />
+           > 
+          <View style={{flexDirection:'row'}}>
+              <Text style={{color:'white', fontSize:20, fontWeight:'bold', textAlign:'center', marginTop:26, marginLeft:10}}>NEXT ORDER</Text>
+              <View style={{ marginTop: 13, alignItems: 'flex-end', marginLeft:15}}>
+                <Icon name='shoppingcart' color='white' size={50} />
+              </View>
             </View>
           </TouchableOpacity>
         </View>
@@ -70,7 +88,7 @@ const styles = StyleSheet.create({
   buttonx: {
     height: 80,
     width: "50%",
-    borderBottomRightRadius:50,
+    borderBottomRightRadius: 50,
     marginTop: 2,
     backgroundColor: '#e67e22',
   },

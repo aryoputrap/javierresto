@@ -1,14 +1,17 @@
 import * as React from 'react';
-import { View, StyleSheet, Image, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, Image, TouchableOpacity,StatusBar } from 'react-native';
 import { ScrollView, FlatList } from 'react-native-gesture-handler';
 import { Card, CardItem, Body, Container, Content } from 'native-base';
 import { Button, Text } from 'react-native-paper';
 import { Checkbox } from "react-native-paper";
 import { connect } from "react-redux"
+import AsyncStorage from '@react-native-community/async-storage'
 
 import HeaderBill from '../../components/header/HeaderBill'
 import HeaderBill2 from '../../components/header/HeaderBill2'
 import ListBill from './listBill'
+
+import {editTransaction} from '../../_action/Transaction'
 
 
 class bill extends React.Component {
@@ -17,15 +20,49 @@ class bill extends React.Component {
     this.state = {
       checked: false,
       isEnable: false,
-      jmlTotal:0   
+      jmlTotal: 0,
+      discount:0,
+      serviceCharge:0,
+      tax:0,
+      total:0,
     };
   }
-  sumHarga = async () => {
-    await this.props.Order.dataItemTmp.map((item) => {
-    const tmpMatap = [item.price*item.qty]
+  
+  handleTransaction=  () => {
+    let data = {
+      tableNumber: this.props.Transaction.tableNumber,
+      finshedTime: null,
+      subtotal: this.state.total ,
+      discount: this.state.discount,
+      serviceCharge: this.state.serviceCharge,
+      tax: this.state.tax,
+      total: this.state.total,
+      isPaid:true,
+    }
+
+    this.props.dispatch(editTransaction(this.props.Order.dataItemTmp[0].transactionId, data))
+    this.props.navigation.navigate('EndRe')
+  }
+  hapusProp = () => {
+    
+  }
+
+  sumHarga = () => {
+    let jmlTemporer = 0
+    this.props.Order.dataItemTmp.map((item) => {
+      const tmpMatap = item.price * item.qty
+      jmlTemporer = jmlTemporer+tmpMatap
+    })
+    let discount = Math.round(jmlTemporer*0)
+    let serviceCharge = Math.round(jmlTemporer*0.05)
+    let tax = Math.round(jmlTemporer*0.1)
+
     this.setState({
-        jmlTotal: this.state.jmlTotal+tmpMatap
-      })
+      jmlTotal:jmlTemporer,
+      discount,
+      serviceCharge,
+      tax,
+      total:Math.round(jmlTemporer-discount+serviceCharge+tax)
     })
   }
   componentDidMount() {
@@ -44,11 +81,19 @@ class bill extends React.Component {
       }
     })
   }
+  Nominal = nominal => {
+    const reverse = nominal
+      .toString().split("").reverse().join("");
+    const ribuan = reverse.match(/\d{1,3}/g);
+    const hasil = ribuan
+      .join(".").split("").reverse().join("");
+    return hasil;
+  };
   render() {
-
 
     return (
       <View style={styles.container}>
+        <StatusBar  backgroundColor="#e67e22" barStyle="light-content"/>
         <Text style={{ fontSize: 18, fontWeight: 'bold', textAlign: 'center' }}>
           03 September 2019: 20:31{'\n'}
         </Text>
@@ -69,11 +114,11 @@ class bill extends React.Component {
                           callBackNya={this.CekStatusOrder}
                           itemNya={item} />
                       )}
-                    keyExtractor={item => item.id}
+                    keyExtractor={ (item,index) => {index.toString()}}
                     showVerticalScrollIndicator={true}
                   />
                 </View>
-                <View style={styles.garis1}/>
+                <View style={styles.garis1} />
                 <View
                   style={{
                     flexDirection: 'row',
@@ -99,11 +144,11 @@ class bill extends React.Component {
                   </Text>
                   </View>
                   <View style={{ flex: 1 }}>
-                    <Text style={styles.bill}>{this.state.jmlTotal}</Text>
-                    <Text style={styles.bill}>Rp.0</Text>
-                    <Text style={styles.bill}>Rp.1.500</Text>
-                    <Text style={styles.bill}>Rp.17.890</Text>
-                    <Text style={styles.total}>Rp. 192.000</Text>
+                    <Text style={styles.bill}>Rp.{this.Nominal(this.state.jmlTotal)}</Text>
+                    <Text style={styles.bill}>Rp.{this.Nominal(this.state.discount)}</Text>
+                    <Text style={styles.bill}>Rp.{this.Nominal(this.state.serviceCharge)}</Text>
+                    <Text style={styles.bill}>Rp.{this.Nominal(this.state.tax)}</Text>
+                    <Text style={styles.total}>Rp.{this.Nominal(this.state.total)}</Text>
                   </View>
                 </View>
                 <View style={styles.garis1} />
@@ -114,9 +159,8 @@ class bill extends React.Component {
                     color="#e67e22"
                     disabled={!this.state.isEnable}
                     style={{ width: '50%', marginLeft: 100 }}
-                    onPress={() => {
-                      this.props.navigation.navigate('EndRe')
-                    }}>
+                    onPress={this.handleTransaction}
+                    >
 
                     <Text style={{ color: 'white', fontSize: 18, fontWeight: 'bold' }}>CASHIER</Text>
                   </Button>
@@ -131,7 +175,8 @@ class bill extends React.Component {
 }
 const mapStatePros = (state) => {
   return {
-    Order: state.Order
+    Order: state.Order,
+    Transaction: state.Transaction
   }
 }
 export default connect(mapStatePros)(bill)
@@ -143,7 +188,7 @@ const styles = StyleSheet.create({
     width: '100%',
     alignItems: 'center',
   },
-  total:{
+  total: {
     textAlign: 'left',
     marginVertical: 5,
     marginHorizontal: 15,
