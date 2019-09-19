@@ -93,7 +93,7 @@ class bill extends React.Component {
 
     return (
       <View style={styles.container}>
-        <StatusBar  backgroundColor="#e67e22" barStyle="light-content"/>
+        <StatusBar translucent backgroundColor="transparent" />
         <Text style={{ fontSize: 18, fontWeight: 'bold', textAlign: 'center' }}>
           03 September 2019: 20:31{'\n'}
         </Text>

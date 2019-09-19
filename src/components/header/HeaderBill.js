@@ -24,6 +24,10 @@ class bill extends React.Component {
     this.getDataTable()
    }
 
+   aksiDelete=()=>{
+    this.props.navigation.navigate('Home')
+   }
+
   render() {
     const { checked } = this.state;
     const isEnable = checked == !false;
@@ -51,9 +55,10 @@ class bill extends React.Component {
                     <Text style={{ fontSize: 15, fontWeight: 'bold', color: 'white' }}>COMPLAIN</Text>
                   </Button>
                   <Button
-                    onPress={() => {
-                      this.props.navigation.navigate('Home')
-                    }}
+                    // onPress={() => {
+                    //   this.props.navigation.navigate('Home')
+                    // }}
+                    onPress={()=>this.aksiDelete()}
                     style={{ backgroundColor: '#e67e22', marginLeft: 20 }}>
                     <Text style={{ fontSize: 15, fontWeight: 'bold', color: 'white' }}>DELETE</Text>
                   </Button>
@@ -69,7 +74,7 @@ const mapStatePros = (state) => {
   }
 }
 
-export default bill;
+export default (mapStatePros)(bill);
 
 const styles = StyleSheet.create({
   container: {

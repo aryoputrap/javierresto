@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { View, Image, StyleSheet, ScrollView, ImageBackground, StatusBar } from 'react-native';
-import { Text, Appbar, Button, TextInput, ActivityIndicator } from 'react-native-paper';
+import { Text, Appbar, Button, TextInput, ActivityIndicator, but } from 'react-native-paper';
 import { CosEdit, CosButton } from '../components/Table/Table'
 import { connect } from 'react-redux'
 import { getMenu } from '../_action/Menu'
@@ -22,15 +22,15 @@ class Profil extends React.Component {
     await this.setState({
       isLoadingOpen: true
     })
-    if(this.state.textTblNumber!=='')
-    { await this.props.dispatch(getMenu())
-    await this.props.dispatch(addTransaction({
-      tableNumber: this.state.textTblNumber
-    }))
-    await AsyncStorage.setItem('noTbl',this.state.textTblNumber)
-    await this.props.navigation.navigate('Home')
+    if (this.state.textTblNumber !== '') {
+      await this.props.dispatch(getMenu())
+      await this.props.dispatch(addTransaction({
+        tableNumber: this.state.textTblNumber
+      }))
+      await AsyncStorage.setItem('noTbl', this.state.textTblNumber)
+      await this.props.navigation.navigate('Home')
     }
-    else(alert('Dear Mr/Mrs please enter number table')
+    else (alert('Dear Mr/Mrs please enter number table')
     )
     await this.setState({
       isLoadingOpen: false
@@ -39,7 +39,7 @@ class Profil extends React.Component {
   render() {
     return (
       <View style={{ backgroundColor: '#FFFF' }}>
-        <StatusBar  backgroundColor="#e67e22" barStyle="light-content"/>
+        <StatusBar translucent backgroundColor="transparent" />
         <View style={styles.container}>
           <ImageBackground
             resizeMode='stretch'
@@ -77,7 +77,7 @@ class Profil extends React.Component {
             </View>
           </View>
           :
-         <ActivityIndicator color='#e67e22' style={styles.loading}></ActivityIndicator>
+          <ActivityIndicator color='#e67e22' style={styles.loading}></ActivityIndicator>
         }
       </View>
     )
@@ -98,10 +98,10 @@ const styles = StyleSheet.create({
   container: {
     padding: 5,
   },
-  loading:{
-    alignSelf:'center',
-    color:'#e67e22',
-    marginTop:20
+  loading: {
+    alignSelf: 'center',
+    color: '#e67e22',
+    marginTop: 20
   },
   Aheader: {
     backgroundColor: '#e67e22',

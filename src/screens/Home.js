@@ -4,7 +4,7 @@ import { StyleSheet, View, StatusBar, Headers, TouchableOpacity, FlatList, Alert
 import { Button } from "react-native-paper"
 import Icon from 'react-native-vector-icons/Entypo'
 import { connect } from "react-redux"
-import { indecrement, setisAddtoChart, remove,addOrder } from '../_action/Order'
+import { indecrement, setisAddtoChart, remove, addOrder } from '../_action/Order'
 import AsyncStorage from "@react-native-community/async-storage"
 
 import Drink from './Drink/drink2'
@@ -17,7 +17,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 class Home extends Component {
   state = {
     dataItemKirimNya: [],
-    noTbl:0
+    noTbl: 0
   }
 
   handleConfirmOrder = () => {
@@ -38,14 +38,14 @@ class Home extends Component {
     );
   };
 
-  orderBenar =  () => {
+  orderBenar = () => {
     this.props.dispatch(addOrder(this.props.Order.dataItemTmp))
     this.props.navigation.navigate('Bill')
   }
   hapusProp = () => {
-    
+
   }
- 
+
 
   Kurang = async (id) => {
     // //set nilai state component child
@@ -66,19 +66,19 @@ class Home extends Component {
       await this.props.dispatch(remove(tmpCountObj))
     }
   };
-  getDataTable = async()=>{
-    const tmpTbl = await AsyncStorage.getItem('noTbl') 
+  getDataTable = async () => {
+    const tmpTbl = await AsyncStorage.getItem('noTbl')
     await this.setState({
-      noTbl:tmpTbl
+      noTbl: tmpTbl
     })
   }
-   componentDidMount(){
+  componentDidMount() {
     this.getDataTable()
-   }
+  }
   render() {
     return (
       <Container>
-        <StatusBar  backgroundColor="#e67e22" barStyle="light-content"/>
+        <StatusBar backgroundColor="#e67e22" barStyle="light-content" />
         <Header />
         <Tabs>
           <Tab heading={<TabHeading style={{ backgroundColor: '#e67e22' }}>
@@ -87,17 +87,16 @@ class Home extends Component {
             <Food navigation={this.props.navigation} />
           </Tab>
           <Tab heading={<TabHeading style={{ backgroundColor: '#e67e22', }}>
-          <Icon name='cake' color='white' size={25} />
+            <Icon name='cake' color='white' size={25} />
             <Text style={{ color: '#fff', fontWeight: 'bold' }} >Desert</Text></TabHeading>}>
             <Appetizer />
           </Tab>
           <Tab heading={<TabHeading style={{ backgroundColor: '#e67e22' }}>
-          <Icon name='trash' color='white' size={25} />
+            <Icon name='trash' color='white' size={25} />
             <Text style={{ color: '#fff', fontWeight: 'bold' }}>Drink</Text></TabHeading>}>
             <Drink />
           </Tab>
         </Tabs>
-
         {this.props.Order.isAddToChart ?
           <View style={{
             height: "23%", width: "100%", position: 'relative',
