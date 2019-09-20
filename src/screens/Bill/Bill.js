@@ -11,7 +11,7 @@ import HeaderBill from '../../components/header/HeaderBill'
 import HeaderBill2 from '../../components/header/HeaderBill2'
 import ListBill from './listBill'
 
-import {editTransaction} from '../../_action/Transaction'
+import {editTransaction,setTransactionBiasa} from '../../_action/Transaction'
 
 
 class bill extends React.Component {
@@ -41,6 +41,7 @@ class bill extends React.Component {
     }
 
     this.props.dispatch(editTransaction(this.props.Order.dataItemTmp[0].transactionId, data))
+    this.props.dispatch(setTransactionBiasa(data))
     this.props.navigation.navigate('EndRe')
   }
   hapusProp = () => {
@@ -93,7 +94,7 @@ class bill extends React.Component {
 
     return (
       <View style={styles.container}>
-        <StatusBar translucent backgroundColor="transparent" />
+
         <Text style={{ fontSize: 18, fontWeight: 'bold', textAlign: 'center' }}>
           03 September 2019: 20:31{'\n'}
         </Text>

@@ -1,11 +1,19 @@
 initialState = {
     dataItem: '',
     message: '',
-    isLoading: true
+    isLoading: true,
+    dataTransbiasa:''
   }
   
   export default Transaction = (state = initialState, action) => {
     switch (action.type) {
+      //Data transaksi
+      case 'SET_TRANSACTION_BIASA':
+        return {
+          ...state,
+         dataTransbiasa:action.payload
+        }
+        break
       //Untuk Transaction ADD 
       case 'ADD_TRANSACTION_PENDING':
         return {

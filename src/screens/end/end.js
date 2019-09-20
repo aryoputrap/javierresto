@@ -4,13 +4,22 @@ import { Text, Appbar, Button, TextInput } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/AntDesign'
 import AsyncStorage from "@react-native-community/async-storage"
 
-class Profil extends React.Component {
+import { connect } from "react-redux"
+
+import QRCode from 'react-native-qrcode-svg';
+
+class End extends React.Component {
   state = {
     dataItemKirimNya: [],
-    noTbl: 0
+    data:[],
+    noTbl: 0,
+   
   }
   getDataTable = async () => {
     const tmpTbl = await AsyncStorage.getItem('noTbl')
+    await this.setState({
+      data:this.props.Transaction.dataTransBiasa
+    })
     await this.setState({
       noTbl: tmpTbl
     })
@@ -19,8 +28,17 @@ class Profil extends React.Component {
     this.getDataTable()
   }
 
+  aksiAddOrder = async () => {
+    const tmpTbl = await AsyncStorage.clear()
+    await this.setState({
+      noTbl: tmpTbl
+    })
+    await this.props.navigation.navigate('Open')
+  }
+
   render() {
 
+ 
     return (
       <View>
         <Appbar.Header style={styles.Aheader}>
@@ -30,8 +48,12 @@ class Profil extends React.Component {
         <View style={styles.container}>
           <View style={styles.logoContainer}>
 
-            <Image style={styles.logo}
-              source={require('../../asset/barcode.png')} />
+            <QRCode
+              
+              style={{width:"50%", height:"50%"}}
+              size={300}
+              value={this.state.data}
+            />
 
             <Text style={styles.title2}>Thank For Comming Mr/Mrs: No {this.state.noTbl}</Text>
           </View>
@@ -39,11 +61,11 @@ class Profil extends React.Component {
         <View style={{ marginVertical: 500 }}>
           <TouchableOpacity
             style={styles.buttonx}
-            onPress={() => this.props.navigation.navigate('Open')}
-           > 
-          <View style={{flexDirection:'row'}}>
-              <Text style={{color:'white', fontSize:20, fontWeight:'bold', textAlign:'center', marginTop:26, marginLeft:10}}>NEXT ORDER</Text>
-              <View style={{ marginTop: 13, alignItems: 'flex-end', marginLeft:15}}>
+            onPress={() => this.aksiAddOrder()}
+          >
+            <View style={{ flexDirection: 'row' }}>
+              <Text style={{ color: 'white', fontSize: 20, fontWeight: 'bold', textAlign: 'center', marginTop: 26, marginLeft: 10 }}>NEXT ORDER</Text>
+              <View style={{ marginTop: 13, alignItems: 'flex-end', marginLeft: 15 }}>
                 <Icon name='shoppingcart' color='white' size={50} />
               </View>
             </View>
@@ -54,6 +76,13 @@ class Profil extends React.Component {
   }
 
 }
+const mapStatePros = (state) => {
+  return {
+    Order: state.Order,
+    Transaction: state.Transaction
+  }
+}
+export default connect(mapStatePros)(End)
 
 const styles = StyleSheet.create({
   container: {
@@ -96,4 +125,3 @@ const styles = StyleSheet.create({
 
 
 
-export default Profil

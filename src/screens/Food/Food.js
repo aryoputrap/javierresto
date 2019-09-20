@@ -8,17 +8,10 @@ import { setDataDummyMenus } from '../../_action/Menu'
 
 import ListItem from "../ListItem";
 import { Card, CardItem, Body, Text, Container, Content } from 'native-base';
-// import { connect } from 'react-redux'
-// import { ambilKost } from '../../../redux/_actions/ListKost'
-// import { Button } from "react-native-paper";
-// import ButtonFilter from '../../component/ButonFilter';
+
 
 
 class LihatDaftar extends Component {
-
-  // componentDidMount() {
-  //   this.props.dispatch(setDataDummyMenus(this.state.lihatDaftar))
-  // }
 
   constructor(props){
     super(props);

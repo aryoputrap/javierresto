@@ -121,7 +121,7 @@ initialStateOrder = {
           ...state,
           dataItemTmp:action.payload
         }
-      case 'REMOVE':
+      case 'REMOVE_ORDER':
         return{
           ...state,
           dataItemTmp:state.dataItemTmp.filter((item)=>(

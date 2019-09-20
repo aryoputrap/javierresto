@@ -4,6 +4,7 @@ import IconFa from 'react-native-vector-icons/FontAwesome5'
 
 import Home from '../screens/Home'
 import Bill from '../screens/Bill/Bill'
+import Bill2 from '../screens/Bill/Bill2'
 import Food from '../screens/Food/Food'
 import EndRe from '../screens/end/end'
 import Open from '../screens/open'
@@ -16,6 +17,7 @@ const StackPublic = createAppContainer(createStackNavigator(
     Open:Open,
     Home:Home,
     Bill:Bill,
+    Bill2:Bill2,
     Food:Food,
     Callsc:Callsc,
     Modal:Modal,
@@ -28,14 +30,6 @@ const StackPublic = createAppContainer(createStackNavigator(
   }
 )
 )
-// HomeNavigator.navigationOptions = ({ navigation }) => {
-//   let tabBarVisible = true;
-//   if (navigation.state.index > 0) {
-//     tabBarVisible = false;
-//   }
-//   return {
-//     tabBarVisible
-//   };
-// };
+
 
 export default StackPublic

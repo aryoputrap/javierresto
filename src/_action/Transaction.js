@@ -1,6 +1,12 @@
 import axios from 'axios'
 import Constanta from '../Constanta'
 
+export const setTransactionBiasa = (data) => {
+  return {
+    type: 'SET_TRANSACTIO_BIASA',
+    payload: data
+  }
+}
 export const addTransaction = (data) => {
   return {
     type: 'ADD_TRANSACTION',

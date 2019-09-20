@@ -135,16 +135,3 @@ const styles = StyleSheet.create({
 
 
 })  
-
-      // <View >
-      //   <TouchableHighlight onPress={()=>this.changeModeVisibility(true)}>
-      //     <Text>Open Modal Yes/No</Text>
-      //   </TouchableHighlight>
-      //   <Modal
-      //     styles={[styles.touchablelight]}
-      //     transparent={true} visible={this.state.isModalVisible} 
-      //     onRequestClose={()=>this.changeModeVisibility(false)}
-      //     animationType='fade'>
-      //    <YesModal changeModeVisibility={this.changeModeVisibility} setData={this.setData}/>
-      //   </Modal>
-      // </View>

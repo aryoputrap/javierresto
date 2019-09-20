@@ -24,7 +24,7 @@ class header extends Component {
   render() {
     return (
       <View>
-        <Header style={{elevation:0, backgroundColor: "#e67e22" }}>
+        <Header style={{backgroundColor: "#e67e22" }}>
           <Left style={{flex:1}}>
           <Text style={{color:'white',fontWeight: 'bold', fontSize:20}}>
               No:{this.state.noTbl}
@@ -38,8 +38,7 @@ class header extends Component {
               JAVIER
             </Text>
           <Right>
-            {/* <IconIon name='md-timer' size={17} style={{ marginRight: 5,color:'white',fontWeight: 'bold', fontSize:20 }}></IconIon>
-            <Text style={{ marginRight: 5,color:'white',fontWeight: 'bold', fontSize:20 }}>0:10:40</Text> */}
+          
           </Right>
         </Header>
       </View>

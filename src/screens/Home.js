@@ -78,7 +78,7 @@ class Home extends Component {
   render() {
     return (
       <Container>
-        <StatusBar backgroundColor="#e67e22" barStyle="light-content" />
+        <StatusBar backgroundColor="#e67e22'" barStyle="light-content"/>
         <Header />
         <Tabs>
           <Tab heading={<TabHeading style={{ backgroundColor: '#e67e22' }}>
