@@ -4,10 +4,11 @@ Nama aplikasi ini adalah Javier-Resto , Aplikasi yang dibuat untuk memudahkan pe
 
 ## Gambar Aplikasi
 <p float="left">
-  <img src="https://drive.google.com/file/d/14_njqtuz1UhhsUgNK-P8rJfTsYs6Nea-/view?usp=sharing" width="200" height="350" alt="Choose a Service Type"/>
-  <img src="https://drive.google.com/file/d/1-rlFVGYsqelW1iAQLRYzzrY6FfjGpK9j/view?usp=sharing" width="200" height="350" alt="Menu"/>
-  <img src="https://drive.google.com/file/d/1MG-FJYKr13saf73f8WQQIj2wIXGuBQza/view?usp=sharing" width="200" height="350" alt="menuk"/>
-  <img src="https://drive.google.com/file/d/1BZzvX01pEltMQx4Du9od85_VgYGjU6uz/view?usp=sharing" width="200" height="350" alt="Order History"/>
+  <img src="https://github.com/aryoputrap/javierresto/blob/master/screenshoot/Screenshot_20190914-090035.png" width="200" height="350" alt="Choose a Service Type"/>
+  <img src="https://github.com/aryoputrap/javierresto/blob/master/screenshoot/Screenshot_20190914-100106.png" width="200" height="350" alt="Menu"/>
+  <img src="https://github.com/aryoputrap/javierresto/blob/master/screenshoot/Screenshot_20190914-100125.png" width="200" height="350" alt="menuk"/>
+  <img src="https://github.com/aryoputrap/javierresto/blob/master/screenshoot/Screenshot_20190914-100159.png" width="200" height="350" alt="Order History"/>
+  <img src="https://github.com/aryoputrap/javierresto/blob/master/screenshoot/Screenshot_20190914-100209.png" width="200" height="350" alt="Bill"/>
 </p>
 
 
