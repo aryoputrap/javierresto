@@ -28,7 +28,7 @@ class bill extends React.Component {
     };
   }
   
-  handleTransaction=  () => {
+  handleTransaction= async() => {
     let data = {
       tableNumber: this.props.Transaction.tableNumber,
       finshedTime: null,
@@ -39,7 +39,6 @@ class bill extends React.Component {
       total: this.state.total,
       isPaid:true,
     }
-
     this.props.dispatch(editTransaction(this.props.Order.dataItemTmp[0].transactionId, data))
     this.props.dispatch(setTransactionBiasa(data))
     this.props.navigation.navigate('EndRe')

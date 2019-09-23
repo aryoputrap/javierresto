@@ -24,6 +24,7 @@ class header extends Component {
   render() {
     return (
       <View>
+        <StatusBar backgroundColor = "#e67e22"/>
         <Header style={{backgroundColor: "#e67e22" }}>
           <Left style={{flex:1}}>
           <Text style={{color:'white',fontWeight: 'bold', fontSize:20}}>

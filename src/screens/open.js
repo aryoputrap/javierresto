@@ -38,8 +38,8 @@ class Profil extends React.Component {
   }
   render() {
     return (
-      <View style={{ backgroundColor: '#FFFF' }}>
-        
+      <View>
+        <StatusBar backgroundColor ="#e67e22"/>
         <View style={styles.container}>
           <ImageBackground
             resizeMode='stretch'

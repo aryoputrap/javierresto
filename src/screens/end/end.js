@@ -11,7 +11,7 @@ import QRCode from 'react-native-qrcode-svg';
 class End extends React.Component {
   state = {
     dataItemKirimNya: [],
-    data:[],
+    data:'Rp.185.000',
     noTbl: 0,
    
   }
@@ -24,6 +24,12 @@ class End extends React.Component {
       noTbl: tmpTbl
     })
   }
+
+  // DataQrCode=async()=>{
+  //   await this.setState({
+  //     data:this.props.Transaction.dataTransBiasa
+  // }
+
   componentDidMount() {
     this.getDataTable()
   }

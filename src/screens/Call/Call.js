@@ -10,7 +10,7 @@ export default class Call extends Component {
         <ImageBackground 
             resizeMode='stretch'
             style={{width:100,height:100,borderRadius:100,marginTop:100,alignItems:'center',alignSelf:'center'}}> 
-            <Image style={{alignContent:'center'}} source={require('../../asset/cos.png')}/>
+            
             </ImageBackground>
      </View>
     );
