@@ -10,7 +10,7 @@ Nama aplikasi ini adalah Javier-Resto dengan sistem POS (Point of Sale), Aplikas
   <img src="https://github.com/aryoputrap/javierresto/blob/master/screenshoot/Screenshot_20190914-100159.png" width="200" height="350" alt="Order History"/>
   <img src="https://github.com/aryoputrap/javierresto/blob/master/screenshoot/Screenshot_20190914-100209.png" width="200" height="350" alt="Bill"/>
 </p>
-## VIDEO Aplikasi
+## 
 <p float="left">
   <img src="https://github.com/aryoputrap/javierresto/blob/master/src/asset/Video%20Apliaksi.gif" width="200" height="350" alt="Video"/>
 </p>
@@ -32,7 +32,7 @@ Nama aplikasi ini adalah Javier-Resto dengan sistem POS (Point of Sale), Aplikas
 * email: aryoputrap@gmail.com
 
 ## Download App (Demo usage only)
-[![Iyat Download](https://i1.wp.com/apkmodsios.com/wp-content/uploads/2018/12/Download-Infinite-Design-3.4.10-Apk.png)](https://drive.google.com/file/d/1PuZBMXHrhb7Bvtbkh15iEJ5frlumFWHT/view?usp=sharing)
+[![Iyat Download](https://i1.wp.com/apkmodsios.com/wp-content/uploads/2018/12/Download-Infinite-Design-3.4.10-Apk.png)](https://drive.google.com/file/d/1WjRRgG81Z3vJ2E5uu-_WhBkH93LREZs7/view?usp=sharing)
 
 
 ----
