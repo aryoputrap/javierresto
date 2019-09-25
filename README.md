@@ -8,7 +8,6 @@ Nama aplikasi ini adalah Javier-Resto dengan sistem POS (Point of Sale), Aplikas
   <img src="https://github.com/aryoputrap/javierresto/blob/master/screenshoot/Screenshot_20190914-100106.png" width="200" height="350" alt="Menu"/>
   <img src="https://github.com/aryoputrap/javierresto/blob/master/screenshoot/Screenshot_20190914-100125.png" width="200" height="350" alt="menuk"/>
   <img src="https://github.com/aryoputrap/javierresto/blob/master/screenshoot/Screenshot_20190914-100159.png" width="200" height="350" alt="Order History"/>
-  <img src="https://github.com/aryoputrap/javierresto/blob/master/screenshoot/Screenshot_20190914-100209.png" width="200" height="350" alt="Bill"/>
 </p>
 video
 <p float="left">
